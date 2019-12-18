@@ -37,10 +37,10 @@ function restartGame() {
     game.top = 1;
     game.active = 1;
     game.wn = 0;
-    team1.nameteam = "";
+    team1.nameteam = "Team1";
     team2.points = 0;
     team2.pointsf = 0;
-    team2.nameteam = "";
+    team2.nameteam = "Team2";
     team1.points = 0;
     team1.pointsf = 0;
     
