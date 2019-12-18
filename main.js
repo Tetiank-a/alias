@@ -22,11 +22,13 @@ let game = {
     wn: 0,
 };
 let team1 = {
-    nameteam: "",
+    nameteam: "Team1",
+    pointsf: 0,
     points: 0,
 };
 let team2 = {
-    nameteam: "",
+    nameteam: "Team2",
+    pointsf: 0,
     points: 0,
 };
 
@@ -37,8 +39,15 @@ function restartGame() {
     game.wn = 0;
     team1.nameteam = "";
     team2.points = 0;
+    team2.pointsf = 0;
     team2.nameteam = "";
     team1.points = 0;
+    team1.pointsf = 0;
+    
+    team1.points=0;
+    team2.points=0;
+    team1.pointsf=0;
+    team2.pointsf=0;
     tim = 0;
     document.getElementById('bstart').style.display = "inline-block";
     document.getElementById('s1').style.display = "inline-block";
@@ -95,6 +104,8 @@ function ziro(x) {
     document.getElementById('pi2').style.display = "none";
     document.getElementById('pi3').style.display = "none";
     document.getElementById('pi4').style.display = "none";
+    document.getElementById('pi11').style.display = "none";
+    document.getElementById('pi22').style.display = "none";
 
     document.getElementById('points1').style.display = "none";
     document.getElementById('points2').style.display = "none";
@@ -112,6 +123,8 @@ function ziro(x) {
         document.getElementById('t2pic').style.display = "none";
         document.getElementById('t3pic').style.display = "none";
         document.getElementById('t4pic').style.display = "none";
+        document.getElementById('t51pic').style.display = "none";
+        document.getElementById('t52pic').style.display = "none";
 
         document.getElementById('pic1').style.display = "none";
         document.getElementById('pic2').style.display = "none";
@@ -123,6 +136,10 @@ function ziro(x) {
 
     }
     if (x == 2) {
+        if (game.active==1)
+        team1.points=0;
+        else 
+        team2.points=0;
         document.getElementById('T1').style.display = "none";
         document.getElementById('T2').style.display = "none";
         document.getElementById('T3').style.display = "none";
@@ -133,6 +150,8 @@ function ziro(x) {
         document.getElementById('t2pic').style.display = "none";
         document.getElementById('t3pic').style.display = "none";
         document.getElementById('t4pic').style.display = "none";
+        document.getElementById('t51pic').style.display = "none";
+        document.getElementById('t52pic').style.display = "none";
     }
 }
 
@@ -164,16 +183,20 @@ function round(n) {
         document.getElementById('teamname').textContent = team1.nameteam;
         if (team1.nameteam == "Alien")
             document.getElementById('t2pic').style.display = "block";
+        else 
         if (team1.nameteam == "Monkey")
             document.getElementById('t4pic').style.display = "block";
+        else document.getElementById('t51pic').style.display = "block";
         document.getElementById('points').textContent = "Points : " + team1.points;
     }
     if (game.active == 2) {
         document.getElementById('teamname').textContent = team2.nameteam;
         if (team2.nameteam == "Astronaut")
             document.getElementById('t3pic').style.display = "block";
+        else 
         if (team2.nameteam == "Snowman")
             document.getElementById('t1pic').style.display = "block";
+        else document.getElementById('t52pic').style.display = "block";
         document.getElementById('points').textContent = "Points : " + team2.points;
     }
 
@@ -232,18 +255,24 @@ function final(x) {
         document.getElementById('te1').style.display = "block";
         if (team1.nameteam == "Alien")
             document.getElementById('pi2').style.display = "block";
+        else 
         if (team1.nameteam == "Monkey")
             document.getElementById('pi4').style.display = "block";
-        document.getElementById('points1').textContent = "Points : " + team1.points;
+        else document.getElementById('pi11').style.display = "block";
+        team1.pointsf+=team1.points;
+        team2.pointsf+=team2.points;
+        document.getElementById('points1').textContent = "Points : " + team1.pointsf;
         document.getElementById('points1').style.display = "block";
 
         document.getElementById('te2').textContent = team2.nameteam;
         document.getElementById('te2').style.display = "block";
         if (team2.nameteam == "Astronaut")
             document.getElementById('pi3').style.display = "block";
+        else 
         if (team2.nameteam == "Snowman")
             document.getElementById('pi1').style.display = "block";
-        document.getElementById('points2').textContent = "Points : " + team2.points;
+        else document.getElementById('pi22').style.display = "block";
+        document.getElementById('points2').textContent = "Points : " + team2.pointsf;
         document.getElementById('points2').style.display = "block";
 
         document.getElementById('nextr').style.display = "inline-block";
@@ -266,7 +295,7 @@ function end(x) {
 }
 
 function myFunction() {
-    if (tim >= 20) {
+    if (tim >= 10) {
         if (game.active == 1) {
             game.active = 2;
             tim = 0;
@@ -282,7 +311,7 @@ function myFunction() {
         }
     }
     tim++;
-    document.getElementById('clock').textContent = "Time : " + (20 - tim);
+    document.getElementById('clock').textContent = "Time : " + (10 - tim);
     setTimeout(myFunction, 1000);
 }
 
@@ -306,6 +335,8 @@ function points(k) {
         if (game.top == 4 && s < art.length-1)
         team1.points += k;
         
+        if (team1.points<0) team1.points=0;
+        
         document.getElementById('points').textContent = "Points : " + team1.points;
     }
     if (game.active == 2) {
@@ -320,6 +351,8 @@ function points(k) {
         
         if (game.top == 4 && s < art.length-1)
         team2.points += k;
+        
+        if (team2.points<0) team2.points=0;
         
         document.getElementById('points').textContent = "Points : " + team2.points;
     }
